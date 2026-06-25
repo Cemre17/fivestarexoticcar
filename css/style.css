@@ -676,7 +676,7 @@ ul{list-style:none}
   .hero__media{transform:none!important}        /* hard-disable any parallax zoom on mobile */
   .hero__video{position:absolute;inset:auto;left:50%;top:50%;
     transform:translate(-50%,-50%);
-    width:85%;height:auto;max-height:42vh;object-fit:contain}
+    width:78%;height:auto;max-height:38vh;object-fit:contain}
 }
 
 /* Small phones */
