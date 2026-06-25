@@ -1,0 +1,11 @@
+# VS Code debug profiles (auto-generated)
+.vscode/.edge-debug/
+.vscode/.chrome-debug/
+
+# OS junk
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Logs
+*.log
