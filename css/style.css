@@ -671,9 +671,12 @@ ul{list-style:none}
   .modal__close{top:14px;right:16px}
 }
 
-/* Mobile: show the WHOLE hero video (no crop) — dark background around it */
+/* Mobile: show the WHOLE hero video (whole car + background), uncropped, no zoom */
 @media(max-width:768px){
-  .hero__video{object-fit:contain;background:#07080b}
+  .hero__media{transform:none!important}        /* hard-disable any parallax zoom on mobile */
+  .hero__video{position:absolute;inset:auto;left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    width:100%;height:auto;max-height:64vh;object-fit:contain}
 }
 
 /* Small phones */
