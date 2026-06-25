@@ -59,10 +59,12 @@
 
   /* --- Background: mouse parallax + cursor light + scroll effect --- */
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   const media = document.querySelector('.hero__media');
   const heroContent = document.querySelector('.hero__content');
 
-  if (!prefersReduced && media) {
+  // Parallax/zoom only on devices with a real mouse — avoids extra cropping on touch
+  if (!prefersReduced && canHover && media) {
     const root = document.documentElement;
     let tx = 0, ty = 0, cx = 0, cy = 0;                                   // parallax target/current
     let gx = window.innerWidth / 2, gy = window.innerHeight * 0.4;        // light target
@@ -113,6 +115,7 @@
     const vids = [vidA, vidB];
     let active = 0;
     let swapping = false;
+    vidA.muted = true; vidB.muted = true;   // ensure muted so mobile autoplay is allowed
 
     // Pre-warm the second video so its first frame is ready (prevents black flash)
     vidB.play().then(() => { vidB.pause(); try { vidB.currentTime = 0; } catch (_) {} }).catch(() => {});
@@ -120,6 +123,10 @@
     vids.forEach((v) => v.addEventListener('ended', () => { try { v.currentTime = 0; } catch (_) {} }));
 
     vidA.play().catch(() => {});
+    // Mobile/iOS fallback: start playback on the first user interaction if autoplay was blocked
+    const kick = () => { const v = vids[active]; if (v && v.paused) v.play().catch(() => {}); };
+    document.addEventListener('touchstart', kick, { once: true, passive: true });
+    document.addEventListener('click', kick, { once: true });
 
     const onTime = (e) => {
       const v = e.target;
